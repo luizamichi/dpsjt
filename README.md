@@ -1,32 +1,51 @@
 # Depósito de Materiais de Construção São Judas Tadeu
-Website desenvolvido utilizando Python e Flask. Planejado para a exibição de informações da empresa de interesse de clientes e fornecedores, além de possuir um sistema de acesso aos produtos do depósito, com a possibilidade de leitura, inserção e alteração de produtos.
+Website desenvolvido utilizando Python e Flask. Planejado para a exibição de informações da empresa de interesse de clientes e fornecedores, além de possuir um sistema de gerenciamento de fornecedores, produtos e usuários.
 
 ### Diretório
 No download, você encontrará os seguintes diretórios e arquivos:
 ```
 dpsjt/
+├── controllers/
+│   ├── __init__.py
+│   ├── default.py
+│   └── persistence.py
 ├── db/
-│   ├── data.sql
-│   └── product.sql
+│   ├── create.log
+│   ├── delete.log
+│   ├── inserts.sql
+│   ├── tables.sql
+│   └── update.log
+├── models/
+│   ├── __init__.py
+│   ├── product.py
+│   ├── provider.py
+│   └── user.py
 ├── static/
-│   ├── bootstrap.min.css
-│   ├── bootstrap.min.js
-│   ├── dpsjt.jpg
-│   ├── jquery.min.js
-│   ├── jquery.tablesorter.min.js
-│   ├── logo.png
-│   ├── logo.psd
-│   ├── logo.svg
-│   ├── luiz_amichi.svg
-│   ├── padlock.svg
-│   └── trowel.svg
+│   ├── css/
+│   │   └── bootstrap.min.css
+│   ├── img/
+│   │   ├── cms.svg
+│   │   ├── dpsjt.jpg
+│   │   ├── logo.png
+│   │   ├── logo.psd
+│   │   ├── luiz_amichi.svg
+│   │   ├── padlock.svg
+│   │   └── trowel.svg
+│   └── js/
+│       ├── bootstrap.min.js
+│       ├── jquery.min.js
+│       └── jquery.tablesorter.min.js
 ├── templates/
-│    ├── error.html
-│    ├── index.html
-│    ├── login.html
-│    └── system.html
-├── dpsjt.py
-├── product.py
+│   ├── base.html
+│   ├── base_system.html
+│   ├── index.html
+│   ├── login.html
+│   ├── products.html
+│   ├── providers.html
+│   ├── system.html
+│   └── users.html
+├── app.py
+├── config.py
 └── README.md
 ```
 
@@ -34,7 +53,7 @@ dpsjt/
 Para o funcionamento do software, é necessário possuir o [Python](https://www.python.org/) e o [SQLite](https://www.sqlite.org/) instalados na máquina. Além do interpretador e da biblioteca, são necessários alguns pacotes ([Flask](https://flask.palletsprojects.com/en/1.1.x/) e [Jinja](https://jinja.palletsprojects.com/en/2.11.x/)) que podem ser instalados através do [PIP](https://pypi.org/project/pip/).
 
 Instale as dependências para iniciar o servidor, abaixo é informado o passo a passo para a preparação do ambiente em Linux.
-- [Faça download do ZIP](https://github.com/luizamichi/dpsjt/releases/download/v1.1/dpsjt1.1.zip)
+- [Faça download do ZIP](https://github.com/luizamichi/dpsjt/releases/download/v1.2/dpsjt1.2.zip)
 - Atualize a lista de pacotes: `sudo apt update`
 - Instale o Python, PIP e SQLite: `sudo apt install python3 python3-pip sqlite3`
 - Instale o Flask e o Jinja: `pip install -U Flask Jinja2`
@@ -42,17 +61,17 @@ Instale as dependências para iniciar o servidor, abaixo é informado o passo a 
 ### Execução
 Feito o procedimento de instalação de dependências, basta acessar a pasta do projeto e inicar no modo *deploy*. Lembrando que a primeira execução do software utiliza um comando diferente, informando o argumento (*initdb*).
 
-Primeira inicialização do software com a base de dados vazia:
+Primeira inicialização do software com a base de dados vazia e usuário *default* (dpsjt):
 ```sh
-$ python3 dpsjt.py initdb
+$ python3 app.py initdb
 ```
 
-Primeira inicialização do software com a base de dados populada com alguns produtos para fins de teste:
+Primeira inicialização do software com a base de dados populada com alguns fornecedores e produtos (simbólicos) para fins de teste:
 ```sh
-$ python3 dpsjt.py initdb populate
+$ python3 app.py initdb populate
 ```
 
-Para ativar o modo *debug*, basta executar `python3 dpsjt.py debug`. Para uma execução normal, basta executar `python3 dpsjt.py`.
+Por padrão, o modo *debug* está ativado, caso deseje desativar, basta alterar a *flag* DEBUG no arquivo `config.py`.
 
 Caso aconteça algum problema, crie uma ambiente virtual isolado com o VENV e instale as dependências e o software nela.
 
@@ -63,9 +82,6 @@ A tabela informa os endereços acessíveis:
 
 | Rota | Descrição |
 | ---- | --------- |
-| /<, default, home, index, inicio> | Página inicial (Website) |
-| /<about, about-us, sobre, sobre-nos> | Página sobre o depósito |
-| /<contact, contato, localizacao, location> | Página de contato e localização |
-| /<product, products, produto, produtos> | Página de linha de materiais |
+| /<, index> | Página inicial (Website) |
 | /login | Página de autenticação |
-| /system | Página de gerenciamento de produtos |
+| /system | Página de gerenciamento de conteúdo |

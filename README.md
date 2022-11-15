@@ -17,6 +17,7 @@ dpsjt/
 │   └── update.log
 ├── models/
 │   ├── __init__.py
+│   ├── client.py
 │   ├── product.py
 │   ├── provider.py
 │   └── user.py
@@ -38,6 +39,7 @@ dpsjt/
 ├── templates/
 │   ├── base.html
 │   ├── base_system.html
+│   ├── clients.html
 │   ├── index.html
 │   ├── login.html
 │   ├── products.html
@@ -66,7 +68,7 @@ Primeira inicialização do software com a base de dados vazia e usuário *defau
 $ python3 app.py initdb
 ```
 
-Primeira inicialização do software com a base de dados populada com alguns fornecedores e produtos (simbólicos) para fins de teste:
+Primeira inicialização do software com a base de dados populada com alguns clientes, fornecedores e produtos (simbólicos) para fins de teste:
 ```sh
 $ python3 app.py initdb populate
 ```
